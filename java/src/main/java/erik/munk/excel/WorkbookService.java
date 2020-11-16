@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import erik.munk.database.ParamService;
+import erik.munk.service.ParamService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;

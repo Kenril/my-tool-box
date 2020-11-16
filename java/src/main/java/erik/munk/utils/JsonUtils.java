@@ -10,31 +10,25 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 @Slf4j
+@Component
 public class JsonUtils {
 
-	private JsonUtils() {
-	}
-
-	public static JSONObject objectToJson(final Object o) throws JSONException, JsonProcessingException {
+	public JSONObject objectToJson(final Object o) throws JSONException, JsonProcessingException {
 		return new JSONObject(new ObjectMapper().writeValueAsString(o));
 	}
 
-	public static <T> T jsonToObject(final String json, final Class<? extends T> classType) throws IOException {
+	public <T> T jsonToObject(final String json, final Class<? extends T> classType) throws JsonProcessingException {
 		return new ObjectMapper().enable(MapperFeature.USE_STD_BEAN_NAMING).readValue(json, classType);
 	}
 
-	public static <T> T jsonToObject(final JSONObject json, final Class<? extends T> classType) throws IOException {
+	public <T> T jsonToObject(final JSONObject json, final Class<? extends T> classType) throws JsonProcessingException {
 		return jsonToObject(json.toString(), classType);
 	}
 
-	/**
-	 * @param base64EncodedString
-	 * @return
-	 * @throws JSONException
-	 */
-	public static JSONObject stringBase64ToJSONObject(final String base64EncodedString) throws JSONException {
+	public JSONObject stringBase64ToJSONObject(final String base64EncodedString) throws JSONException {
 		byte[] byteArray = Base64.decodeBase64(base64EncodedString);
 		return new JSONObject(new String(byteArray));
 	}

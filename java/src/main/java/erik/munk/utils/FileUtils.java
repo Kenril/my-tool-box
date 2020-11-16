@@ -1,6 +1,7 @@
 package erik.munk.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,22 +10,30 @@ import java.io.FileReader;
 import java.io.IOException;
 
 @Slf4j
+@Component
 public class FileUtils {
 
 	public static final String RESOURCES_FOLDER = "src/test/resources/";
+
+	private final JsonUtils jsonUtils;
+
+	public FileUtils(JsonUtils jsonUtils) {
+		this.jsonUtils = jsonUtils;
+	}
+
 
 	public <T> T createObjectFromJsonFile(final String jsonFile, final Class<T> targetClass) throws FileNotFoundException {
 		String json = readJsonFile(RESOURCES_FOLDER + jsonFile);
 		T data = null;
 		try {
-			data = (T) JsonUtils.jsonToObject(json, targetClass);
+			data = (T) jsonUtils.jsonToObject(json, targetClass);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return data;
 	}
 
-	public static String readJsonFile(final String filename) throws FileNotFoundException {
+	public String readJsonFile(final String filename) throws FileNotFoundException {
 		File file = readFile(filename);
 		StringBuilder sb = new StringBuilder();
 		try (BufferedReader fr = new BufferedReader(new FileReader(file))) {
@@ -38,7 +47,7 @@ public class FileUtils {
 		return sb.toString();
 	}
 
-	public static File readFile(final String filename) throws FileNotFoundException {
+	public File readFile(final String filename) throws FileNotFoundException {
 		File file = new File(filename);
 		if (!file.exists()) {
 			log.error("Failed to find file {}", filename);

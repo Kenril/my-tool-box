@@ -2,18 +2,20 @@ package erik.munk.mappingDesign;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
+import erik.munk.utils.JsonUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
 public class MyClient {
 
-	private RestTemplate restTemplate;
+	private final RestTemplate restTemplate;
 
-	public MyClient(RestTemplate restTemplate) {
+	private final JsonUtils jsonUtils;
+
+	public MyClient(RestTemplate restTemplate, JsonUtils jsonUtils) {
 		this.restTemplate = restTemplate;
+		this.jsonUtils = jsonUtils;
 	}
 
 	/**
@@ -22,6 +24,6 @@ public class MyClient {
 	 */
 	public Person retrievePerson() throws JsonProcessingException {
 		String thirdPartyResult = restTemplate.getForObject("", String.class);
-		return new ObjectMapper().readValue(thirdPartyResult, Person.class);
+		return jsonUtils.jsonToObject(thirdPartyResult, Person.class);
 	}
 }

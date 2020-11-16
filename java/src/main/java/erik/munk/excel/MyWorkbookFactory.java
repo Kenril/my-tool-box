@@ -14,13 +14,11 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 @Slf4j
-public class EdcWorkbookFactory {
-
-	private EdcWorkbookFactory() {
-
-	}
+@Component
+public class MyWorkbookFactory {
 
 	private static final String POINT = ".";
 
@@ -30,12 +28,11 @@ public class EdcWorkbookFactory {
 
 	/**
 	 * Creation du fichier excel depuis une string encodé en Base64 repésentant le fichier template excel
-	 * @param excelEncodedFileBase64
-	 * @return
-	 * @throws FileNotFoundException
-	 * @throws IOException
+	 * @param excelEncodedFileBase64, the template of the workbook to be created
+	 * @return a file
+	 * @throws IOException, when failing to create temp file
 	 */
-	public static File createWorkbookFile(final String fileName, final String excelEncodedFileBase64) throws IOException {
+	public File createWorkbookFile(final String fileName, final String excelEncodedFileBase64) throws IOException {
 		byte[] f = Base64.decodeBase64(excelEncodedFileBase64);
 		File excel = new File(fileName);
 		if (!excel.exists()) {
@@ -51,11 +48,11 @@ public class EdcWorkbookFactory {
 		return excel;
 	}
 
-	public static Workbook createWorkbook(final String fileName, final String excelEncodedFileBase64) throws IOException {
+	public Workbook createWorkbook(final String fileName, final String excelEncodedFileBase64) throws IOException {
 		return WorkbookFactory.create(createWorkbookFile(fileName, excelEncodedFileBase64));
 	}
 
-	public static Workbook createWorkbook(final File excelFile) throws IOException {
+	public Workbook createWorkbook(final File excelFile) throws IOException {
 		return WorkbookFactory.create(excelFile);
 	}
 

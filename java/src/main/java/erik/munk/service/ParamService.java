@@ -1,4 +1,4 @@
-package erik.munk.database;
+package erik.munk.service;
 
 public class ParamService {
 
