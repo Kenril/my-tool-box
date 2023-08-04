@@ -1,8 +1,2 @@
 ## My Toolbox
-
-### JVM Args
--Djavax.net.debug="ssl,handshake"
-
-
-### Tuto links
-https://www.baeldung.com/parameterized-tests-junit-5
+Personal tool box with code snippets, scripts, code architecture and more for references and hacks in my developer life. 
