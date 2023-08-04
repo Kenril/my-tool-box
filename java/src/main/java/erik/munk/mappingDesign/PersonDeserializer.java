@@ -13,9 +13,9 @@ import java.lang.reflect.Field;
 @Service
 public class PersonDeserializer extends JsonDeserializer<Person> {
 
-	private JsonKeyDao dao;
+	private PersonPort dao;
 
-	public PersonDeserializer(JsonKeyDao dao) {
+	public PersonDeserializer(PersonPort dao) {
 		this.dao = dao;
 	}
 
@@ -26,9 +26,9 @@ public class PersonDeserializer extends JsonDeserializer<Person> {
 		Field[] fields = p.getClass().getDeclaredFields();
 		for (Field f : fields) {
 			String fieldName = f.getName();
-			String jsonKey = dao.getJsonKey(fieldName);
-			String jsonValue = jsonParser.getValueAsString(jsonKey);
-			f.set(p, jsonValue);
+//			String jsonKey = dao.getPerson(fieldName);
+//			String jsonValue = jsonParser.getValueAsString(jsonKey);
+//			f.set(p, jsonValue);
 		}
 		return p;
 	}
