@@ -1,4 +1,4 @@
-# Rust commands
+## Rust commands
 
 `cargo fmt`
 Automatically formats your code. Can be customised with a .rustfmt.toml file
@@ -17,6 +17,6 @@ Comment types :
 The difference between Inner and Outer documentation is that Inner documentation is not attached to code.
 
 
-# Rust coding
+## Rust coding
 Closure syntax : ||[] <br>
 exemple : |x y| [x + y] 
