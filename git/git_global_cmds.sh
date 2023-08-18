@@ -18,15 +18,22 @@ function debug() {
 }
 
 function findGitCmd() {
-  if [[ "${1}" == *"pull"* ]]; then
-    GIT_CMD_ALIAS=$(git pull ${QUIET_OPTS})
-  fi
-  if [[ "${1}" == *"fetch"* ]]; then
-    GIT_CMD_ALIAS=${GIT_PRUNE_ALIAS}
-  fi
-  if [[ "${1}" == *"prune"* ]]; then
-    GIT_CMD_ALIAS=${GIT_PRUNE_ALIAS}
-  fi
+  debug "Finding git cmd for ${1}"
+    if [[ "${1}" == *"pull"* ]]; then
+      GIT_CMD_ALIAS='git pull '"${QUIET_OPTS}"
+    fi
+    if [[ "${1}" == *"fetch"* ]]; then
+      GIT_CMD_ALIAS=${GIT_PRUNE_ALIAS}
+    fi
+    if [[ "${1}" == *"prune"* ]]; then
+      GIT_CMD_ALIAS=${GIT_PRUNE_ALIAS}
+    fi
+    if [[ "${1}" == *"check-dev"* ]]; then
+      GIT_CMD_ALIAS='git checkout develop'
+    fi
+    if [[ "${1}" == *"check-master"* ]]; then
+      GIT_CMD_ALIAS='git checkout master'
+    fi
 }
 
 function execute() {
