@@ -1,13 +1,11 @@
 package erik.munk;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-    }
+import erik.munk.cmdapps.BigFileLineReplacer;
+
+public class App {
+
+  public static void main(String[] args) throws Exception {
+    BigFileLineReplacer app = new BigFileLineReplacer(args);
+    app.run();
+  }
 }

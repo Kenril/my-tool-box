@@ -1,11 +1,9 @@
 package erik.munk.utils;
 
-import java.io.IOException;
-
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONException;
@@ -21,7 +19,7 @@ public class JsonUtils {
 	}
 
 	public <T> T jsonToObject(final String json, final Class<? extends T> classType) throws JsonProcessingException {
-		return new ObjectMapper().enable(MapperFeature.USE_STD_BEAN_NAMING).readValue(json, classType);
+		return new ObjectMapper().enable(Feature.IGNORE_UNDEFINED).enable(JsonGenerator.Feature.IGNORE_UNKNOWN).readValue(json, classType);
 	}
 
 	public <T> T jsonToObject(final JSONObject json, final Class<? extends T> classType) throws JsonProcessingException {

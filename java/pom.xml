@@ -12,77 +12,116 @@
   <url>http://www.github.com/Kenril/my-tool-box</url>
 
   <properties>
-     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-     <maven.compiler.source>1.8</maven.compiler.source>
-     <maven.compiler.target>1.8</maven.compiler.target>
-	  <junit.version>4.11</junit.version>
-	  <javaee-api.version>8.0.1</javaee-api.version>
-	  <poi.version>4.1.2</poi.version>
-	  <mysql-connector-java.version>8.0.19</mysql-connector-java.version>
-	  <json.version>20190722</json.version>
-	  <lombok.version>1.18.12</lombok.version>
-	  <springframework.version>5.2.3.RELEASE</springframework.version>
-	  <spring-data.version>2.3.9.RELEASE</spring-data.version>
-	  <slf4j-api.version>1.7.30</slf4j-api.version>
-	  <log4j-api.version>2.12.1</log4j-api.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.11</maven.compiler.source>
+    <maven.compiler.target>1.11</maven.compiler.target>
+    <lombok.version>1.18.34</lombok.version>
+    <jackson-core.version>2.17.2</jackson-core.version>
+    <jackson-databind.version>2.17.0</jackson-databind.version>
+    <json.version>20240303</json.version>
+    <poi.version>4.1.2</poi.version>
+    <mysql-connector-java.version>8.0.19</mysql-connector-java.version>
+    <springframework.version>6.1.10</springframework.version>
+    <spring-data.version>3.3.2</spring-data.version>
+    <slf4j-api.version>2.0.12</slf4j-api.version>
+    <log4j-api.version>2.23.1</log4j-api.version>
+    <commons-cli.version>1.8.0</commons-cli.version>
+    <junit.version>4.13.2</junit.version>
+    <junit-jupiter.version>5.10.3</junit-jupiter.version>
+    <javaee-api.version>8.0.1</javaee-api.version>
   </properties>
 
   <dependencies>
 
-	  <dependency>
-		  <groupId>org.projectlombok</groupId>
-		  <artifactId>lombok</artifactId>
-		  <version>${lombok.version}</version>
-	  </dependency>
-	  <dependency>
-		  <groupId>org.slf4j</groupId>
-		  <artifactId>slf4j-api</artifactId>
-		  <version>${slf4j-api.version}</version>
-	  </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j-api.version}</version>
+    </dependency>
 
-	  <!-- Spring dependencies -->
-	  <dependency>
-		  <groupId>org.springframework</groupId>
-		  <artifactId>spring-core</artifactId>
-		  <version>${springframework.version}</version>
-	  </dependency>
-	  <dependency>
-		  <groupId>org.springframework</groupId>
-		  <artifactId>spring-beans</artifactId>
-		  <version>${springframework.version}</version>
-	  </dependency>
-	  <dependency>
-		  <groupId>org.springframework</groupId>
-		  <artifactId>spring-context</artifactId>
-		  <version>${springframework.version}</version>
-	  </dependency>
-	  <dependency>
-		  <groupId>org.springframework.data</groupId>
-		  <artifactId>spring-data-jpa</artifactId>
-		  <version>${spring-data.version}</version>
-	  </dependency>
+    <!-- Jackson and Json related-->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>${jackson-core.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson-databind.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>${json.version}</version>
+    </dependency>
 
-	  <!-- Database dependencies -->
+    <!-- Spring dependencies -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>${springframework.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+      <version>${springframework.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${springframework.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>${springframework.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-jpa</artifactId>
+      <version>${spring-data.version}</version>
+    </dependency>
 
-	  <!-- Apache dependencies -->
-	  <dependency>
-		  <groupId>org.apache.logging.log4j</groupId>
-		  <artifactId>log4j-api</artifactId>
-		  <version>${log4j-api.version}</version>
-	  </dependency>
-	  <dependency>
-		  <groupId>org.apache.poi</groupId>
-		  <artifactId>poi</artifactId>
-		  <version>${poi.version}</version>
-	  </dependency>
+    <!-- Database dependencies -->
 
-	  <dependency>
-		  <groupId>javax</groupId>
-		  <artifactId>javaee-api</artifactId>
-		  <version>${javaee-api.version}</version>
-	  </dependency>
+    <!-- Apache dependencies -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>${log4j-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>${poi.version}</version>
+    </dependency>
 
-	<!-- Test Dependencies -->
+    <!-- Command Line Interpretation -->
+    <dependency>
+      <groupId>commons-cli</groupId>
+      <artifactId>commons-cli</artifactId>
+      <version>${commons-cli.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>${javaee-api.version}</version>
+    </dependency>
+
+    <!-- Test Dependencies -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit-jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
