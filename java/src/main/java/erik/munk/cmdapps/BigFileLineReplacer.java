@@ -9,13 +9,10 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.chrono.Chronology;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -63,9 +60,8 @@ public class BigFileLineReplacer {
   public BigFileLineReplacer(String[] args) throws ParseException, IOException {
     super();
 
-    formater = DateTimeFormatter.ofLocalizedPattern(DateTimeFormatterBuilder.getLocalizedDateTimePattern(FormatStyle.SHORT, FormatStyle.LONG, Chronology.ofLocale(Locale.FRANCE), Locale.FRANCE));
+    formater = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZZZ").withZone(ZoneId.systemDefault());
 
-    log("Starting application");
     Options options = new Options();
     options.addOption(FILE_OPTION);
     options.addOption(PATTERN_OPTION);
@@ -78,6 +74,15 @@ public class BigFileLineReplacer {
     CommandLine cmd = parser.parse(options, args);
 
     verbose = cmd.hasOption(VERBOSE_OPTION);
+
+    String logFile = cmd.getOptionValue(LOG_FILE_OPTION);
+    if (logFile != null && !logFile.isEmpty()) {
+      logWriter = new BufferedWriter(new FileWriter(logFile));
+    } else {
+      logWriter = new BufferedWriter(new OutputStreamWriter(System.out));
+    }
+    log("Starting application");
+    logV("Found log file option " + logFile);
 
     logV("Init args");
     input = getFile(cmd.getOptionValue(FILE_OPTION));
@@ -95,14 +100,6 @@ public class BigFileLineReplacer {
       fileWriter = new BufferedWriter(new OutputStreamWriter(System.out));
     } else {
       fileWriter = new BufferedWriter(new FileWriter(output));
-    }
-
-    String logFile = cmd.getOptionValue(LOG_FILE_OPTION);
-    logV("Found log file option " + logFile);
-    if (logFile != null && !logFile.isEmpty()) {
-      logWriter = new BufferedWriter(new FileWriter(logFile));
-    } else {
-      logWriter = new BufferedWriter(new OutputStreamWriter(System.out));
     }
   }
 
@@ -135,7 +132,7 @@ public class BigFileLineReplacer {
     Instant finishTime = Instant.now();
     Long totalRuntime = snapDurations.stream().map(Duration::getSeconds).reduce(Long::sum).orElse(0L);
 
-    log("Spend " + Long.divideUnsigned(totalRuntime, snapDurations.size()) + " on avg to process 30_000 lignes");
+    log("Spend " + Duration.ofSeconds(Long.divideUnsigned(totalRuntime, snapDurations.size())) + " on avg to process 30_000 lignes");
     log("Finished process in " + Duration.between(startTime, finishTime).toString());
 
     logWriter.flush();
