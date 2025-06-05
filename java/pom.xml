@@ -29,6 +29,7 @@
     <junit.version>4.13.2</junit.version>
     <junit-jupiter.version>5.10.3</junit-jupiter.version>
     <javaee-api.version>8.0.1</javaee-api.version>
+    <mockito-junit-jupiter.version>5.11.0</mockito-junit-jupiter.version>
   </properties>
 
   <dependencies>
@@ -127,6 +128,17 @@
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <version>${mockito-junit-jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${springframework.version}</version>
     </dependency>
   </dependencies>
 
