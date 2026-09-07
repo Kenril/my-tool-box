@@ -8,4 +8,3 @@ if [ -f "${directory}/.gitignore" ]; then
     git branch -D "${branch}";
   done
 fi
-

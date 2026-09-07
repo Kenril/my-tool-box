@@ -1,9 +1,22 @@
+HAS_7Z=`echo $PATH |grep 7-Z`
+if [ -z "$HAS_7Z" ]; then
+  echo "Adding 7-Zip to PATH"
+  PATH=${PATH}:"/c/Program Files/7-Zip"
+else
+  echo "7-Zip already in PATH"
+fi
+
+# Replace {{scripts_folder}} with the folder where my scripts are
+HAS_SCRIPTS_FOLDER=`echo $PATH | grep "{{scripts_folder}}"`
+if [ -z "$HAS_SCRIPTS_FOLDER" ]; then
+  echo "Adding script perso to PATH"
+  PATH=${PATH}:"{{scripts_folder}}"
+else
+  echo "Script perso available"
+fi
+
 export repo-perso="${HOME}/Desktop/PERSO/repos"
 export toolbox="${repo-perso}/my-tool-box"
-
-source "${toolbox}/git/git_global_cmds.sh"
-source "${toolbox}/jahia/provisioning-available-module-list.sh"
-source "${toolbox}/jahia/provisioning-generate-script.sh"
 
 # --show-control-chars: help showing Korean or accented characters
 alias ls='ls -F --color=auto --show-control-chars'
@@ -24,7 +37,7 @@ alias gamaster='git-all check-master'
 
 
 # Jahia utility scripts
-alias jahia-prov-list="${toolbox}/jahia/provisioning-available-module-list.sh" # Generates a list of
+alias jahia-prov-list="${toolbox}/jahia/provisioning-available-module-list.sh"
 alias jahia-prov-create="${toolbox}/jahia/provisioning-generate-script.sh"
 
 alias jahia-pl='jahia-prov-list'

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-
+set +v
 GIT_CMD=${*};
-DEBUG=false;
+DEBUG=false; # false, true, verbose
 QUIET_OPTS="-q"
 
 GIT_PRUNE_ALIAS=$(source git_prune_local.sh)
@@ -13,41 +13,54 @@ fi
 
 function debug() {
   if [ "${DEBUG}" == "true" ] || [ "${DEBUG}" == "verbose" ]; then
+    set -v
     echo "${1}"
+    set +v
   fi
+}
+
+function info() {
+  set -v
+  echo "${1}"
+  set +v
 }
 
 function findGitCmd() {
   debug "Finding git cmd for ${1}"
     if [[ "${1}" == *"pull"* ]]; then
-      GIT_CMD_ALIAS='git pull '"${QUIET_OPTS}"
+      git pull "${QUIET_OPTS}"
     fi
     if [[ "${1}" == *"fetch"* ]]; then
-      GIT_CMD_ALIAS=${GIT_PRUNE_ALIAS}
+      ${GIT_PRUNE_ALIAS}
     fi
     if [[ "${1}" == *"prune"* ]]; then
-      GIT_CMD_ALIAS=${GIT_PRUNE_ALIAS}
+      ${GIT_PRUNE_ALIAS}
     fi
     if [[ "${1}" == *"check-dev"* ]]; then
-      GIT_CMD_ALIAS='git checkout develop'
+      git checkout -B develop
     fi
     if [[ "${1}" == *"check-master"* ]]; then
-      GIT_CMD_ALIAS='git checkout master'
+      git checkout -B master
+    fi
+    if [[ "${1}" == *"check-main"* ]]; then
+      git checkout -B main
+    fi
+    if [[ "${1}" == *"force-check-main"* ]]; then
+      git checkout -B main
+	  git reset --hard
     fi
 }
 
 function execute() {
-  echo "Executing git ${GIT_CMD} in ${1}"
+  info "Executing git ${GIT_CMD} in $(realpath ${1})"
   debug "3 : cd into ${1}"
   cd "${1}" || exit 50
   if [ "pull" == "${GIT_CMD}" ]; then
     git stash ${QUIET_OPTS}
   fi
 
-  findGitCmd ${GIT_CMD}
-
-  ${GIT_CMD_ALIAS} || exit
-  echo "Finished ${GIT_CMD} in ${1}"
+  findGitCmd ${GIT_CMD} || exit
+  debug "Finished ${GIT_CMD} in ${1}"
 
   if [[ "${GIT_CMD}" == *"fetch"* ]]; then
     debug "Executing git gc..."
@@ -98,9 +111,10 @@ function loop() {
   done
 }
 
-echo "Starting git ${GIT_CMD}..."
-debug "1 : cd into $( dirname -- "$0"; )"
-cd "$( dirname -- "$0"; )" || exit 49;
+info "Starting git ${GIT_CMD}..."
+workingDir=${PWD}
+debug "1 : cd into $( ${workingDir} -- "$0"; )"
+cd "$( ${workingDir} -- "$0"; )" || exit 49;
 isGitDir="false";
 
 for d in ./*/
@@ -110,5 +124,6 @@ do
   debug "0.1 : End loop ${d}"
 done
 
-echo "Finished all"
-
+info "Finished all"
+notification.bat "Finished ${GIT_CMD} in ${workingDir}"
+set -v
